@@ -1,6 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
 
+/*
+    TODO:
+        - Add controls for different settings
+        - Put everything into JPanels
+        - Add front-end for leaderboard, saving, etc (+ methods for switching)
+*/
+
 public class GUI extends JFrame {
     private JFrame frame = new JFrame("Aim Trainer Demo");
     private JLabel lbl = new JLabel("Points: 0", JLabel.CENTER);

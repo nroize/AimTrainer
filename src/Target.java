@@ -1,5 +1,9 @@
 import javax.swing.*;
 import java.lang.Math;
+/*
+    TODO:
+        - Add different types of targets that extend this class
+*/
 
 public class Target extends JButton {
     public Target(int minWidth, int minHeight, int maxWidth, int maxHeight) {
