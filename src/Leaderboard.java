@@ -1,5 +1,10 @@
+import java.util.HashMap;
+/*
+    TODO:
+        - Make Leaderboard constructor take in directory, make add to variable
+*/
 public class Leaderboard {
-    public static void main(String[] args) {
-
+    HashMap<String, Integer> lb;
+    public Leaderboard(String dir) {
     }
 }
