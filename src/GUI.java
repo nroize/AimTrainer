@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /*
     TODO:
@@ -11,6 +13,8 @@ import java.awt.*;
 public class GUI extends JFrame {
     private JFrame frame = new JFrame("Aim Trainer Demo"); // Creates JFrame
     private JLabel lbl = new JLabel("Points: 0", JLabel.CENTER); // Used to display points
+    private long time;
+    private Target target;
 
     public GUI(){
         frame.setResizable(false); // Makes frame non-resizeable
@@ -19,7 +23,16 @@ public class GUI extends JFrame {
         frame.setSize(500, 650); // Sets size of frame
         frame.setLayout(null); // Disables layout for frame
         frame.getContentPane().add(lbl); // Adds label to frame
+        frame.getContentPane().setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes frame kill code when window is closed
+        target = new Target();
+        target.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                target.changeLoc(50, 80, 380, 400);
+            }
+        });
+        frame.getContentPane().add(target);
         frame.setVisible(true); // Makes frame visible
     }
 
@@ -32,4 +45,17 @@ public class GUI extends JFrame {
     public void addButton(JButton in) {
         frame.getContentPane().add(in);
     }
+    /*
+    public void addTarget(String type) {
+        if (type.equals("Normal")) {
+            Target target = new Target(50, 80, 380, 400);
+        } else if (type.equals("Fading")) {
+            FadingTarget target = new FadingTarget(time);
+        } //else {
+            //ShrinkingTarget target = new ShrinkingTarget(time);
+        //}
+     */
+
+
+
 }

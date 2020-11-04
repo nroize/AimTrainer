@@ -1,14 +1,23 @@
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.lang.Math;
 /*
     TODO:
         - Add different types of targets that extend this class
 */
 
-public class Target extends JButton {
+public class Target extends JButton implements Runnable {
+    private double opacity = 1;
     public Target(int minWidth, int minHeight, int maxWidth, int maxHeight) {
         this.changeLoc(minWidth, minHeight, maxWidth, maxHeight);
         this.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "none"); // Remaps space to do nothing to this button
+        run();
+    }
+    public Target() {
+        this.changeLoc(50, 80, 380, 400);
+        run();
     }
     public void changeLoc(int minWidth, int minHeight, int maxWidth, int maxHeight) {
         int randX = (int)Math.round(Math.random()*(maxWidth-minWidth+1) + minWidth);
@@ -17,4 +26,21 @@ public class Target extends JButton {
         this.setBounds(randX, randY, 50, 50);
     }
 
+
+
+    public void run() {
+        ActionListener lowerOpac = new ActionListener() {
+            int timing = 0;
+            public void actionPerformed (ActionEvent e) {
+                timing++;
+                System.out.println(timing);
+                if (timing >= 2) {
+                    timing = 0;
+                    changeLoc(50, 80, 380, 400);
+                }
+            }
+        };
+        Timer timer = new Timer(1000, lowerOpac);
+        timer.start();
+    }
 }
