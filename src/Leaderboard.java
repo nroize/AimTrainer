@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.HashMap;
 import java.awt.print.Printable;
 
+
 /*
     TODO:
         - Make Leaderboard constructor take in directory, make add to variable
@@ -17,18 +18,24 @@ public class Leaderboard {
 
 
         //pw.close();
-        lb = convert("Leaderboard.csv");
+        try {
+            lb = convert("Leaderboard.csv");
+        } catch (IOException e) {
+            System.out.println("Could not find file.");
+        }
     }
 
     private HashMap convert(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("Leaderboard.csv"));
-        String line = null;
+        String line;
         HashMap<String, Integer> map = new HashMap<String, Integer>();
 
         while ((line = br.readLine()) != null) {
             String str[] = line.split(",");
-            map.put(str[0],(int)str[1]);
+            map.put(str[0],Integer.parseInt(str[1]));
         }
+
+        return map;
     }
 }
 
