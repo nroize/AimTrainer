@@ -9,7 +9,9 @@ import java.awt.print.Printable;
 */
 public class Leaderboard {
     HashMap<String, Integer> lb;
+public Leaderboard() {
 
+}
     public Leaderboard(String cons) {
 
         try {
@@ -19,24 +21,31 @@ public class Leaderboard {
         }
     }
 
-    private HashMap convert(String fileName) throws IOException {
+    private static HashMap convert(String fileName) throws IOException {
         BufferedReader br = new BufferedReader(new FileReader("Leaderboard.csv"));
         String line;
         HashMap<String, Integer> map = new HashMap<String, Integer>();
 
         while ((line = br.readLine()) != null) {
             String str[] = line.split(",");
-            map.put(str[0],Integer.parseInt(str[1]));
+            map.put(str[0], Integer.parseInt(str[1]));
         }
 
         return map;
     }
-    public HashMap returnLeaderboard (){
 
-
-        return lb;
+    public HashMap returnMap() throws IOException {
+    lb=convert("Leaderboard.csv");
+    return lb;
+    }
+    public void writeToLeaderboard(String name,Integer points) throws IOException {
+        FileWriter fw= new FileWriter("Leaderboard.csv",true);
+        PrintWriter pw= new PrintWriter(fw);
+        pw.println(name+","+points);
+        pw.close();
     }
 }
+
 
 
 /*
