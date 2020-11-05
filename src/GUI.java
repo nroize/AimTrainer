@@ -30,11 +30,27 @@ public class GUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 target.changeLoc(50, 80, 380, 400);
+                target.setOpacity(0);
             }
         });
         frame.getContentPane().add(target);
+        repainter.start();
         frame.setVisible(true); // Makes frame visible
     }
+
+    Thread repainter = new Thread() {
+        public void run() {
+            for (;;) {
+                frame.repaint();
+                target.repaint();
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    System.out.println("Whatever.");
+                }
+            }
+        }
+    };
 
     // Used to update points label
     public void dispPoints(int num) {
@@ -45,6 +61,7 @@ public class GUI extends JFrame {
     public void addButton(JButton in) {
         frame.getContentPane().add(in);
     }
+
     /*
     public void addTarget(String type) {
         if (type.equals("Normal")) {

@@ -34,7 +34,7 @@ public class Leaderboard {
     public HashMap returnLeaderboard (){
 
 
-        return 
+        return lb;
     }
 }
 
