@@ -31,14 +31,14 @@ public class FadingTarget extends Target  {
                     dir = true;
                 } else if (opacity <= 0) {
                     dir = false;
+                    changeLoc(50, 80, 380, 400);
                 }
                 try {
                     Thread.sleep(fadeTime);
                 } catch (Exception e) {
-                    System.out.println("OOPS!");
+                    System.out.println("hmm");
+                    continue;
                 }
-                System.out.println(opacity);
-                System.out.println("TEST");
             }
         }
 
@@ -51,9 +51,11 @@ public class FadingTarget extends Target  {
     @Override
     public void paint(Graphics g) {
         Graphics2D g2 = (Graphics2D) g.create();
+        if (opacity < 0) {
+            opacity = 0;
+        }
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) opacity));
-        g2.setColor(Color.black);
-        g2.fillOval((int)(Math.round(getWidth()/2 - 7.5)), (int)(Math.round(getHeight()/2 - 7.5)), 15, 15);
+        g2.fillOval((int) (Math.round(getWidth() / 2 - 7.5)), (int) (Math.round(getHeight() / 2 - 7.5)), 15, 15);
         super.setBackground(new Color(0, 0, 0, 0));
         super.setBorder(null);
         super.paint(g2);

@@ -46,7 +46,8 @@ public class GUI extends JFrame {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-                    System.out.println("Whatever.");
+                    System.out.println(e.getMessage());
+                    break;
                 }
             }
         }

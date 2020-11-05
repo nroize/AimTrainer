@@ -16,6 +16,7 @@ public class Target extends JButton {
     }
     public Target() {
         this.changeLoc(50, 80, 380, 400);
+        this.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "none"); // Remaps space to do nothing to this button
     }
     public void changeLoc(int minWidth, int minHeight, int maxWidth, int maxHeight) {
         int randX = (int)Math.round(Math.random()*(maxWidth-minWidth+1) + minWidth);
