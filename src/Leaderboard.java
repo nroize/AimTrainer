@@ -12,12 +12,6 @@ public class Leaderboard {
 
     public Leaderboard(String cons) {
 
-
-        //FileWriter fw= new FileWriter("leaderboard.csv");
-        //   PrintWriter pw= new PrintWriter(fw);
-
-
-        //pw.close();
         try {
             lb = convert("Leaderboard.csv");
         } catch (IOException e) {
@@ -37,6 +31,11 @@ public class Leaderboard {
 
         return map;
     }
+    public HashMap returnLeaderboard (){
+
+
+        return 
+    }
 }
 
 
@@ -44,7 +43,7 @@ public class Leaderboard {
 5 methods
 - constructor- blank, calls private method
 - private method- convert csv to hash map
-- get leaderboard, get inputs returns maps
+- get leaderboard, returns maps
 - write to leaderboard, takes 2 inputs, adds a line with that information
 - sorting the hash map
 
