@@ -5,31 +5,49 @@ import java.awt.event.ActionListener;
 import java.lang.System.*;
 import java.util.concurrent.TimeUnit;
 
-public class FadingTarget extends Target implements Runnable {
+public class FadingTarget extends Target  {
     private long fadeTime;
     long present;
     private double opacity;
+    private boolean dir = false;
+    private int pos = 0;
+
     public FadingTarget(long fadeTime) {
         fadeTime = fadeTime;
-        System.out.println(fadeTime);
-        run();
+        new Thread(test);
+        test.start();
     }
 
     public void resetTime(long present) {
         present = present;
     }
 
-    @Override
-    public void run() {
-        ActionListener lowerOpac = new ActionListener() {
-            int timing = 0;
-            public void actionPerformed (ActionEvent e) {
-                timing++;
+    Thread test = new Thread() {
+        @Override
+        public void run() {
+            if (!dir) {
+                pos++;
+            } else {
+                pos--;
             }
-        };
-        Timer timer = new Timer(10, lowerOpac);
-        timer.start();
-    }
+            if (pos == 500) {
+                dir = true;
+            } else if (pos == 0) {
+                dir = false;
+            }
+            try {
+                System.out.println("SLEPT!!");
+                sleep(100);
+            } catch (InterruptedException e) {
+                System.out.println("whatever.");
+            }
+            setOpacity(((-0.0000048 * ((pos - 2500) * (pos - 2500))) + 30) / 100);
+            System.out.println(pos);
+            System.out.println("TEST");
+            run();
+        }
+    };
+
 
     @Override
     public void paint(Graphics g) {
@@ -41,7 +59,7 @@ public class FadingTarget extends Target implements Runnable {
 
     public void setOpacity(double opacity) {
         this.opacity = opacity;
-        repaint();
+        this.repaint();
     }
 
 }
