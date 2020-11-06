@@ -18,11 +18,12 @@ public class Target extends JButton {
         this.changeLoc(50, 80, 380, 400);
         this.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "none"); // Remaps space to do nothing to this button
     }
-    public void changeLoc(int minWidth, int minHeight, int maxWidth, int maxHeight) {
+    public int[] changeLoc(int minWidth, int minHeight, int maxWidth, int maxHeight) {
         int randX = (int)Math.round(Math.random()*(maxWidth-minWidth+1) + minWidth);
         int randY = (int)Math.round(Math.random()*(maxHeight-minHeight+1) + minHeight);
         System.out.println(randX + " " + randY);
         this.setBounds(randX, randY, 15, 15);
+        return new int[]{randX, randY};
     }
 
 

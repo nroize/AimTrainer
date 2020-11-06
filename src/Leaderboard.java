@@ -24,7 +24,7 @@ public class Leaderboard {
     }
 
     private static HashMap convert(String fileName) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader("Leaderboard.csv"));
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
         String line;
         HashMap<String, Integer> map = new HashMap<String, Integer>();
 
@@ -48,16 +48,17 @@ public class Leaderboard {
         pw.close();
     }
 
-    public void sorting (HashMap map){
-            Map<Integer, String> lb = sortByValues(map);
+    public HashMap sorting (HashMap map){
+            HashMap <Integer, String> sortedMap = sortByValues(map);
+            return sortedMap;
         }
     private static HashMap sortByValues(HashMap map) {
         List list = new LinkedList(map.entrySet());
         // Defined Custom Comparator here
         Collections.sort(list, new Comparator() {
             public int compare(Object o1, Object o2) {
-                return ((Comparable) ((Map.Entry) (o1)).getValue())
-                        .compareTo(((Map.Entry) (o2)).getValue());
+                return ((Comparable)((Map.Entry) (o2)).getValue())
+                        .compareTo(((Map.Entry) (o1)).getValue());
             }
         });
 
