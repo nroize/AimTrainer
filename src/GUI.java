@@ -14,7 +14,7 @@ public class GUI extends JFrame {
     private JFrame frame = new JFrame("Aim Trainer Demo"); // Creates JFrame
     private JLabel lbl = new JLabel("Points: 0", JLabel.CENTER); // Used to display points
     private long time;
-    private FadingTarget target;
+    private ShrinkingTarget target;
 
     public GUI(){
         frame.setResizable(false); // Makes frame non-resizeable
@@ -25,12 +25,12 @@ public class GUI extends JFrame {
         frame.getContentPane().add(lbl); // Adds label to frame
         frame.getContentPane().setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes frame kill code when window is closed
-        target = new FadingTarget(5);
+        target = new ShrinkingTarget(5, 20);
         target.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 target.changeLoc(50, 80, 380, 400);
-                target.setOpacity(0);
+                target.setSize(0);
             }
         });
         frame.getContentPane().add(target);

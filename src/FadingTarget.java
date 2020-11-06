@@ -15,6 +15,7 @@ public class FadingTarget extends Target  {
     public FadingTarget(long fadeTime) {
         this.fadeTime = (long)Math.round(((fadeTime*0.5) - 1));
         new Thread(test);
+        this.setRolloverEnabled(false);
         test.start();
     }
 
@@ -35,9 +36,7 @@ public class FadingTarget extends Target  {
                 }
                 try {
                     Thread.sleep(fadeTime);
-                } catch (Exception e) {
-                    System.out.println("hmm");
-                    continue;
+                } catch (Exception ignored) {
                 }
             }
         }
