@@ -1,5 +1,5 @@
 import java.io.*;
-import java.util.HashMap;
+import java.util.*;
 import java.awt.print.Printable;
 
 
@@ -9,9 +9,11 @@ import java.awt.print.Printable;
 */
 public class Leaderboard {
     HashMap<String, Integer> lb;
-public Leaderboard() {
 
-}
+    public Leaderboard() {
+
+    }
+
     public Leaderboard(String cons) {
 
         try {
@@ -35,16 +37,43 @@ public Leaderboard() {
     }
 
     public HashMap returnMap() throws IOException {
-    lb=convert("Leaderboard.csv");
-    return lb;
+        lb = convert("Leaderboard.csv");
+        return lb;
     }
-    public void writeToLeaderboard(String name,Integer points) throws IOException {
-        FileWriter fw= new FileWriter("Leaderboard.csv",true);
-        PrintWriter pw= new PrintWriter(fw);
-        pw.println(name+","+points);
+
+    public void writeToLeaderboard(String name, Integer points) throws IOException {
+        FileWriter fw = new FileWriter("Leaderboard.csv", true);
+        PrintWriter pw = new PrintWriter(fw);
+        pw.println(name + "," + points);
         pw.close();
     }
-}
+
+    public void sorting (HashMap map){
+            Map<Integer, String> lb = sortByValues(map);
+        }
+    private static HashMap sortByValues(HashMap map) {
+        List list = new LinkedList(map.entrySet());
+        // Defined Custom Comparator here
+        Collections.sort(list, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                return ((Comparable) ((Map.Entry) (o1)).getValue())
+                        .compareTo(((Map.Entry) (o2)).getValue());
+            }
+        });
+
+        // Here I am copying the sorted list in HashMap
+        // using LinkedHashMap to preserve the insertion order
+        HashMap sortedHashMap = new LinkedHashMap();
+        for (Iterator it = list.iterator(); it.hasNext();) {
+            Map.Entry entry = (Map.Entry) it.next();
+            sortedHashMap.put(entry.getKey(), entry.getValue());
+        }
+        return sortedHashMap;
+    }
+
+
+    }
+
 
 
 
