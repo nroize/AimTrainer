@@ -6,11 +6,11 @@ import java.awt.event.ActionListener;
 /*
     TODO:
         - Add controls for different settings
-        - Put everything into JPanels
+        - Put everything into JPanels DO THIS ALREADY, LEON!!!!
         - Add front-end for leaderboard, saving, etc (+ methods for switching)
 */
 
-public class GUI extends JFrame {
+public class GUI extends AimTester {
     private JFrame frame = new JFrame("Aim Trainer Demo"); // Creates JFrame
     private JLabel lbl = new JLabel("Points: 0", JLabel.CENTER); // Used to display points
     private long time;
@@ -25,12 +25,14 @@ public class GUI extends JFrame {
         frame.getContentPane().add(lbl); // Adds label to frame
         frame.getContentPane().setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes frame kill code when window is closed
-        target = new ShrinkingTarget(5, 10);
+        target = new ShrinkingTarget(5, 15);
         target.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 target.changeLoc(50, 80, 380, 400);
                 target.setSize(0);
+                setPoints(getPoints()+1);
+                lbl.setText("Points: " + getPoints());
             }
         });
         frame.getContentPane().add(target);
@@ -45,9 +47,7 @@ public class GUI extends JFrame {
                 target.repaint();
                 try {
                     Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    System.out.println(e.getMessage());
-                    break;
+                } catch (Exception ignored) {
                 }
             }
         }

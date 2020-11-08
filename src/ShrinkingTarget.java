@@ -1,59 +1,62 @@
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ShrinkingTarget extends Target {
-    private long time;
+    private int fadeTime = 0;
     private int[] pos;
     private double curSize;
-    private double firstSize;
+    private final double firstSize;
     private boolean dir = false;
 
     public ShrinkingTarget(long time, double userSize) {
         pos = changeLoc(50, 80, 380, 400);
-        this.time = (long)Math.round(((time*0.5) - 1));
-        new Thread(test);
+        this.firstSize = userSize;
+        this.fadeTime = (int)Math.round(((time*0.5) - 1));
+        System.out.println(fadeTime);
         this.setRolloverEnabled(false);
-        test.start();
+        timer.setInitialDelay(0);
+        timer.setRepeats(true);
+        timer.start();
     }
 
-    Thread test = new Thread() {
-        @Override
-        public void run() {
-            for (;;) {
-                if (!dir) {
-                    curSize += 0.001;
-                } else {
-                    curSize -= 0.001;
-                }
-                if (curSize >= 1) {
-                    dir = true;
-                } else if (curSize <= 0) {
-                    dir = false;
-                    pos = changeLoc(50, 80, 380, 400);
-                }
-                try {
-                    Thread.sleep(time);
-                } catch (Exception ignored) {
-                }
-                setSize(curSize);
+
+    ActionListener sizeChange = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            if(!dir) {
+                curSize += 0.001;
+            } else {
+                curSize -= 0.001;
+            }
+            if(curSize >=1) {
+                dir = true;
+            } else if(curSize <=0) {
+                dir = false;
+                pos = changeLoc(50, 80, 380, 400);
             }
         }
     };
 
+    Timer timer = new Timer(this.fadeTime, sizeChange);
+
 
     @Override
     public void paint(Graphics g) {
+        int size = (int)(curSize*firstSize);
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.fillOval(pos[0], pos[1], (int)(curSize*firstSize), (int)(curSize*firstSize));
-        g2.setColor(Color.black);
-        super.setBounds(pos[0], pos[1], (int)(curSize*firstSize), (int)(curSize*firstSize));
+        if (curSize < 0) {
+            curSize = 0;
+        }
+        g2.fillOval(pos[0], pos[1], size, size);
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         super.setBorder(null);
+        super.setBackground(new Color(0, 0, 0, 255));
         super.paint(g2);
         g2.dispose();
     }
 
     public void setSize(double size) {
-        System.out.println(size*curSize);
         this.curSize = size;
-        this.repaint();
     }
 }

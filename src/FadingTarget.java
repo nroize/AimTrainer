@@ -14,12 +14,12 @@ public class FadingTarget extends Target  {
 
     public FadingTarget(long fadeTime) {
         this.fadeTime = (long)Math.round(((fadeTime*0.5) - 1));
-        new Thread(test);
+        new Thread(main);
         this.setRolloverEnabled(false);
-        test.start();
+        main.start();
     }
 
-    Thread test = new Thread() {
+    Thread main = new Thread() {
         @Override
         public void run() {
             for (; ; ) {
@@ -40,10 +40,6 @@ public class FadingTarget extends Target  {
                 }
             }
         }
-
-        private String toString(double v) {
-            return "" + v;
-        }
     };
 
 
@@ -55,6 +51,7 @@ public class FadingTarget extends Target  {
         }
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) opacity));
         g2.fillOval((int) (Math.round(getWidth() / 2 - 7.5)), (int) (Math.round(getHeight() / 2 - 7.5)), 15, 15);
+        System.out.println("Repainted.");
         super.setBackground(new Color(0, 0, 0, 0));
         super.setBorder(null);
         super.paint(g2);

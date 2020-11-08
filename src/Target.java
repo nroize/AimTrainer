@@ -9,7 +9,6 @@ import java.lang.Math;
 */
 
 public class Target extends JButton {
-    private double opacity = 1;
     public Target(int minWidth, int minHeight, int maxWidth, int maxHeight) {
         this.changeLoc(minWidth, minHeight, maxWidth, maxHeight);
         this.getInputMap().put(KeyStroke.getKeyStroke("SPACE"), "none"); // Remaps space to do nothing to this button
@@ -22,10 +21,9 @@ public class Target extends JButton {
         int randX = (int)Math.round(Math.random()*(maxWidth-minWidth+1) + minWidth);
         int randY = (int)Math.round(Math.random()*(maxHeight-minHeight+1) + minHeight);
         System.out.println(randX + " " + randY);
-        this.setBounds(randX, randY, 15, 15);
+        this.setBounds(randX, randY, getWidth()+5, getHeight()+5);
         return new int[]{randX, randY};
     }
-
 
 /*
     public void run() {

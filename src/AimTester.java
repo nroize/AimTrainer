@@ -9,10 +9,15 @@ import java.awt.event.ActionListener;
 */
 
 public class AimTester {
-    private static int points = 1;
+    private static int points = 0;
     private static GUI main = new GUI();
     public static void main(String[] args) {
     }
+
+    public void setPoints(int amount) {
+        points = amount;
+    }
+
     public int getPoints() {
         return points;
     }
