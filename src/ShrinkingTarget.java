@@ -35,6 +35,7 @@ public class ShrinkingTarget extends Target {
                 dir = false;
                 pos = changeLoc(50, 80, 380, 400);
             }
+            ShrinkingTarget.super.setSize(new Dimension((int)(curSize*firstSize), (int)(curSize*firstSize)));
         }
     };
 
@@ -48,10 +49,10 @@ public class ShrinkingTarget extends Target {
         if (curSize < 0) {
             curSize = 0;
         }
-        g2.fillOval(pos[0], pos[1], size, size);
+        g2.fillOval((int)(Math.round((double)getWidth() / 2 - (double)size/2)), (int)(Math.round(((double)getWidth() / 2 - (double)size/2))), size, size);
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
         super.setBorder(null);
-        super.setBackground(new Color(0, 0, 0, 255));
+        super.setBackground(new Color(0, 0, 0, 0));
         super.paint(g2);
         g2.dispose();
     }
