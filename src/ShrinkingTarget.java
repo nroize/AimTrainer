@@ -1,22 +1,26 @@
+import org.w3c.dom.ls.LSOutput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.TimeUnit;
 
 public class ShrinkingTarget extends Target {
-    private int fadeTime = 0;
-    private int[] pos;
+    private int delay;
     private double curSize;
     private final double firstSize;
     private boolean dir = false;
+    long startTime = System.nanoTime();
 
     public ShrinkingTarget(long time, double userSize) {
-        pos = changeLoc(50, 80, 380, 400);
+        changeLoc(50, 80, 380, 400);
         this.firstSize = userSize;
-        this.fadeTime = (int)Math.round(((time*0.5) - 1));
-        System.out.println(fadeTime);
+        this.delay = (int)Math.round(((time*0.5) - 1));
+        System.out.println(delay);
         this.setRolloverEnabled(false);
-        timer.setInitialDelay(0);
+        Timer timer = new Timer(delay, sizeChange);
+        System.out.println(delay);
         timer.setRepeats(true);
         timer.start();
     }
@@ -33,13 +37,17 @@ public class ShrinkingTarget extends Target {
                 dir = true;
             } else if(curSize <=0) {
                 dir = false;
-                pos = changeLoc(50, 80, 380, 400);
+                curSize = 0;
+                changeLoc(50, 80, 380, 400);
+                System.out.println(TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - startTime));
             }
-            ShrinkingTarget.super.setSize(new Dimension((int)(curSize*firstSize), (int)(curSize*firstSize)));
+            ShrinkingTarget.this.setSize(new Dimension((int)(curSize*firstSize), (int)(curSize*firstSize)));
         }
     };
 
-    Timer timer = new Timer(this.fadeTime, sizeChange);
+
+
+
 
 
     @Override

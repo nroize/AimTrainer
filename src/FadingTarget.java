@@ -14,6 +14,7 @@ public class FadingTarget extends Target  {
 
     public FadingTarget(long fadeTime) {
         this.fadeTime = (long)Math.round(((fadeTime*0.5) - 1));
+        this.setSize(new Dimension(15, 15));
         new Thread(main);
         this.setRolloverEnabled(false);
         main.start();
@@ -30,8 +31,9 @@ public class FadingTarget extends Target  {
                 }
                 if (opacity >= 1) {
                     dir = true;
-                } else if (opacity <= 0) {
+                } else if (((int)(opacity*100)) <= 0) {
                     dir = false;
+                    System.out.println("Changed loc!");
                     changeLoc(50, 80, 380, 400);
                 }
                 try {
@@ -51,7 +53,6 @@ public class FadingTarget extends Target  {
         }
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, (float) opacity));
         g2.fillOval((int) (Math.round(getWidth() / 2 - 7.5)), (int) (Math.round(getHeight() / 2 - 7.5)), 15, 15);
-        System.out.println("Repainted.");
         super.setBackground(new Color(0, 0, 0, 0));
         super.setBorder(null);
         super.paint(g2);

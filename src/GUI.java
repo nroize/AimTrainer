@@ -25,15 +25,12 @@ public class GUI extends AimTester {
         frame.getContentPane().add(lbl); // Adds label to frame
         frame.getContentPane().setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes frame kill code when window is closed
-        target = new ShrinkingTarget(1, 25);
-        target.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                target.changeLoc(50, 80, 380, 400);
-                target.setSize(0);
-                setPoints(getPoints()+1);
-                lbl.setText("Points: " + getPoints());
-            }
+        target = new ShrinkingTarget(30, 150);
+        target.addActionListener(e -> {
+            target.changeLoc(50, 80, 380, 400);
+            target.setSize(0);
+            setPoints(getPoints()+1);
+            lbl.setText("Points: " + getPoints());
         });
         frame.getContentPane().add(target);
         repainter.start();
