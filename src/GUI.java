@@ -25,7 +25,7 @@ public class GUI extends AimTester {
         frame.getContentPane().add(lbl); // Adds label to frame
         frame.getContentPane().setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes frame kill code when window is closed
-        target = new ShrinkingTarget(5, 25);
+        target = new ShrinkingTarget(1, 25);
         target.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

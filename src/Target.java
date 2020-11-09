@@ -21,7 +21,7 @@ public class Target extends JButton {
         int randX = (int)Math.round(Math.random()*(maxWidth-minWidth+1) + minWidth);
         int randY = (int)Math.round(Math.random()*(maxHeight-minHeight+1) + minHeight);
         System.out.println(randX + " " + randY);
-        this.setBounds(randX, randY, getWidth()+5, getHeight()+5);
+        this.setBounds(randX, randY, getWidth(), getHeight());
         return new int[]{randX, randY};
     }
 
