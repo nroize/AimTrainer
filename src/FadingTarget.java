@@ -42,6 +42,7 @@ public class FadingTarget extends Target  {
                     Thread.sleep(fadeTime);
                 } catch (Exception ignored) {
                 }
+                System.out.println(opacity);
             }
         }
     };

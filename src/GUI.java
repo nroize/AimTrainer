@@ -12,30 +12,31 @@ import java.awt.event.ActionListener;
 
 public class GUI extends AimTester {
     private JFrame frame = new JFrame("Aim Trainer Demo"); // Creates JFrame
-    private GameArea area = new GameArea("shrinking", 10, 20);
+
     private Controls controls = new Controls();
+    private GameArea area;
 
     public GUI(){
         frame.setResizable(false); // Makes frame non-resizeable
         frame.setSize(500, 650); // Sets size of frame
-        area.setBounds(0, 50, 500, 400);
         controls.setBounds(0, 450, frame.getWidth(), 161);
-        frame.getContentPane().add(area);
         frame.getContentPane().add(controls);
-        area.setVisible(true);
         frame.setLayout(null); // Disables layout for frame
         frame.getContentPane().setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes frame kill code when window is closed
         frame.setVisible(true); // Makes frame visible
         new Thread(repainter);
-        repainter.start();
+        controls.addStartListener(gameStarter);
+        controls.addStopListener(gameStopper);
     }
 
     Thread repainter = new Thread() {
         public void run() {
             for (; ; ) {
                 frame.repaint();
-                area.repaint();
+                try {
+                    area.repaint();
+                } catch (Exception ignored) {}
             }
         }
     };
@@ -43,6 +44,45 @@ public class GUI extends AimTester {
     // Used to update points label
     public void dispPoints(int num) {
         //lbl.setText("Points: " + num);
+    }
+
+    ActionListener gameStarter = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            startGame();
+        }
+    };
+
+    ActionListener gameStopper = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            removeGame();
+        }
+    };
+
+    public void startGame() {
+        int time = controls.getUserTime();
+        int size = controls.getUserSize();
+        String type = controls.getType();
+
+        if (time >= 4 && size >= 0) {
+            area = new GameArea(type, time, size);
+            area.setBounds(0, 50, 500, 400);
+            frame.add(area);
+            area.setVisible(true);
+            frame.revalidate();
+            frame.repaint();
+            area.repaint();
+            area.revalidate();
+            repainter.start();
+        }
+    }
+
+    public void removeGame() {
+        try {
+            frame.remove(area);
+            area = null;
+            frame.repaint();
+            frame.revalidate();
+        } catch (Exception ignored) {}
     }
 
     /*
