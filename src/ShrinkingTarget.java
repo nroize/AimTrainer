@@ -14,7 +14,7 @@ public class ShrinkingTarget extends Target {
     long startTime = System.nanoTime();
 
     public ShrinkingTarget(long time, double userSize) {
-        changeLoc(50, 80, 380, 400);
+        changeLoc(50, 80, 380, 400, 0);
         this.firstSize = userSize;
         this.delay = (int) Math.round(((time * 0.5) - 1));
         System.out.println(delay);
@@ -39,8 +39,7 @@ public class ShrinkingTarget extends Target {
                     dir = true;
                 } else if (((int)(curSize*100)) <= 0) {
                     dir = false;
-                    System.out.println("Changed loc!");
-                    changeLoc(50, 80, 380, 400);
+                    changeLoc(50, 80, (500-getWidth()), 380, 0);
                 }
                 try {
                     Thread.sleep(delay);
@@ -75,7 +74,8 @@ public class ShrinkingTarget extends Target {
         g2.dispose();
     }
 
-    public void setSize(double size) {
+    @Override
+    public void setIter(double size) {
         this.curSize = size;
     }
 }

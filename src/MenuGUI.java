@@ -61,5 +61,6 @@ public class MenuGUI extends JFrame {
             }
         };
         selectStart.addActionListener(buttonPressed);
+        MenuGUI.setVisible(true);
     }
 }

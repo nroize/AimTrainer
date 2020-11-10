@@ -12,52 +12,37 @@ import java.awt.event.ActionListener;
 
 public class GUI extends AimTester {
     private JFrame frame = new JFrame("Aim Trainer Demo"); // Creates JFrame
-    private JLabel lbl = new JLabel("Points: 0", JLabel.CENTER); // Used to display points
-    private long time;
-    private ShrinkingTarget target;
+    private GameArea area = new GameArea("shrinking", 10, 20);
+    private Controls controls = new Controls();
 
     public GUI(){
         frame.setResizable(false); // Makes frame non-resizeable
-        lbl.setBounds(0, 0, 500, 100); // Sets size of label
-        lbl.setFont(new Font("Verdana", Font.PLAIN, 20)); // Sets font for points
         frame.setSize(500, 650); // Sets size of frame
+        area.setBounds(0, 50, 500, 400);
+        controls.setBounds(0, 450, frame.getWidth(), 161);
+        frame.getContentPane().add(area);
+        frame.getContentPane().add(controls);
+        area.setVisible(true);
         frame.setLayout(null); // Disables layout for frame
-        frame.getContentPane().add(lbl); // Adds label to frame
         frame.getContentPane().setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes frame kill code when window is closed
-        target = new ShrinkingTarget(60, 150);
-        target.addActionListener(e -> {
-            target.changeLoc(50, 80, 380, 400);
-            target.setSize(0);
-            setPoints(getPoints()+1);
-            lbl.setText("Points: " + getPoints());
-        });
-        frame.getContentPane().add(target);
-        repainter.start();
         frame.setVisible(true); // Makes frame visible
+        new Thread(repainter);
+        repainter.start();
     }
 
     Thread repainter = new Thread() {
         public void run() {
-            for (;;) {
+            for (; ; ) {
                 frame.repaint();
-                target.repaint();
-                try {
-                    Thread.sleep(100);
-                } catch (Exception ignored) {
-                }
+                area.repaint();
             }
         }
     };
 
     // Used to update points label
     public void dispPoints(int num) {
-        lbl.setText("Points: " + num);
-    }
-
-    // This is outdated - needs to be replaced
-    public void addButton(JButton in) {
-        frame.getContentPane().add(in);
+        //lbl.setText("Points: " + num);
     }
 
     /*
