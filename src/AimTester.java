@@ -10,15 +10,16 @@ import java.awt.event.ActionListener;
 
 public class AimTester {
     private static int points = 0;
-    private static GUI main = new GUI();
+    private static GUI initGUI = new GUI();
+    private static LeaderGUI leaderGUI = new LeaderGUI();
     public static void main(String[] args) {
     }
 
-    public void setPoints(int amount) {
+    public static void setPoints(int amount) {
         points = amount;
     }
 
-    public int getPoints() {
+    public static int getPoints() {
         return points;
     }
 }

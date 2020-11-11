@@ -15,19 +15,32 @@ public class GUI extends AimTester {
 
     private Controls controls = new Controls();
     private GameArea area;
+    private static JLabel pointsLbl = new JLabel("Points: 0");
+    private JLabel time = new JLabel("");
+    private LeaderGUI lg = new LeaderGUI();
 
-    public GUI(){
+    public GUI() {
+        pointsLbl.setHorizontalAlignment(SwingConstants.CENTER);
+        pointsLbl.setVerticalAlignment(SwingConstants.TOP);
+        pointsLbl.setFont(new Font("Verdana", Font.BOLD, 20));
         frame.setResizable(false); // Makes frame non-resizeable
         frame.setSize(500, 650); // Sets size of frame
         controls.setBounds(0, 450, frame.getWidth(), 161);
+        pointsLbl.setBounds(0, 0, 500, 30);
+        time.setHorizontalAlignment(SwingConstants.RIGHT);
+        time.setVerticalAlignment(SwingConstants.TOP);
+        time.setBounds(0, 0, 100, 30);
+        time.setFont(new Font("Verdana", Font.PLAIN, 10));
         frame.getContentPane().add(controls);
         frame.setLayout(null); // Disables layout for frame
         frame.getContentPane().setBackground(Color.CYAN);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Makes frame kill code when window is closed
+        frame.getContentPane().add(pointsLbl);
+        frame.getContentPane().add(time);
         frame.setVisible(true); // Makes frame visible
-        new Thread(repainter);
         controls.addStartListener(gameStarter);
         controls.addStopListener(gameStopper);
+        new Thread(repainter);
     }
 
     Thread repainter = new Thread() {
@@ -36,19 +49,22 @@ public class GUI extends AimTester {
                 frame.repaint();
                 try {
                     area.repaint();
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) {
+                }
             }
         }
     };
 
     // Used to update points label
-    public void dispPoints(int num) {
-        //lbl.setText("Points: " + num);
+    public static void dispPoints(int num) {
+        pointsLbl.setText("Points: " + num);
     }
 
     ActionListener gameStarter = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
-            startGame();
+            try {
+                startGame();
+            } catch (Exception ignored) {}
         }
     };
 
@@ -58,10 +74,12 @@ public class GUI extends AimTester {
         }
     };
 
-    public void startGame() {
+    public void startGame() throws Exception {
         int time = controls.getUserTime();
         int size = controls.getUserSize();
         String type = controls.getType();
+        AimTester.setPoints(0);
+        lg.setFrameVisible(false);
 
         if (time >= 4 && size >= 0) {
             area = new GameArea(type, time, size);
@@ -80,22 +98,10 @@ public class GUI extends AimTester {
         try {
             frame.remove(area);
             area = null;
+            lg.setFrameVisible(true);
             frame.repaint();
             frame.revalidate();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
     }
-
-    /*
-    public void addTarget(String type) {
-        if (type.equals("Normal")) {
-            Target target = new Target(50, 80, 380, 400);
-        } else if (type.equals("Fading")) {
-            FadingTarget target = new FadingTarget(time);
-        } //else {
-            //ShrinkingTarget target = new ShrinkingTarget(time);
-        //}
-     */
-
-
-
 }

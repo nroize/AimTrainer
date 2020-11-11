@@ -10,11 +10,8 @@ import java.awt.print.Printable;
 public class Leaderboard {
     HashMap<String, Integer> lb;
 
+
     public Leaderboard() {
-
-    }
-
-    public Leaderboard(String cons) {
 
         try {
             lb = convert("Leaderboard.csv");
@@ -38,7 +35,7 @@ public class Leaderboard {
 
     public HashMap returnMap() throws IOException {
         lb = convert("Leaderboard.csv");
-        return lb;
+        return sortByValues(lb);
     }
 
     public void writeToLeaderboard(String name, Integer points) throws IOException {
@@ -48,10 +45,6 @@ public class Leaderboard {
         pw.close();
     }
 
-    public HashMap sorting (HashMap map){
-            HashMap <Integer, String> sortedMap = sortByValues(map);
-            return sortedMap;
-        }
     private static HashMap sortByValues(HashMap map) {
         List list = new LinkedList(map.entrySet());
         // Defined Custom Comparator here

@@ -5,9 +5,10 @@ public class Listeners extends Target {
     public void addTargetListener(Target target) {
         target.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Click!");
                 target.setIter(0);
-                target.changeLoc(0, 50, (500-target.getWidth()), 380, target.getWidth());
+                AimTester.setPoints(AimTester.getPoints() + 1);
+                GUI.dispPoints(AimTester.getPoints());
+                target.changeLoc(0, 50, (480-target.getWidth()), 380, target.getWidth());
                 System.out.println(500-target.getWidth());
             }
         });

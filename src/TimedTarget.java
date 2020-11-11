@@ -30,6 +30,7 @@ public class TimedTarget extends Target {
                 } else if ((Math.ceil(timeVar*100)) <= 0) {
                     dir = false;
                     System.out.println("Changed loc!");
+                    System.out.println((Math.ceil(timeVar*100)));
                     changeLoc(0, 50, (500-getWidth()), 380, size);
                     System.out.println((500-getWidth()));
                 }

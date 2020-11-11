@@ -36,7 +36,7 @@ public class ShrinkingTarget extends Target {
                     dir = true;
                 } else if (((int)(curSize*100)) <= 0) {
                     dir = false;
-                    changeLoc(50, 80, (500-getWidth()), 380, 0);
+                    changeLoc(50, 80, (480-getWidth()), 380, 0);
                 }
                 try {
                     Thread.sleep(delay);
